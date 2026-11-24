@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Wedding invitation website
 
-## Getting Started
+A mobile-first, animated wedding invitation built with Next.js (App Router), Tailwind CSS, Motion and Embla.
+Sections: envelope intro, hero, invitation card, events, gallery, RSVP, countdown with wish lanterns, footer, music toggle.
 
-First, run the development server:
+## Run it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # production build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Change the content
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Every word lives in **`src/content/invite.ts`**: names, parents, dates, venues, event cards, gallery captions, RSVP and footer text.
+The text there comes from the printed invitation card, translated to English.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| To change | Where |
+|---|---|
+| Photos in the gallery | Put files in `public/gallery/` (portrait 2:3, about 800 px wide) and list them in `invite.gallery.items` with `src` and an optional small `thumb`. |
+| Placeholder illustrations | `src/components/art/` (SVG components). Swap for real artwork when you have it. |
+| Background music | Add `public/audio/invite.mp3`. The music button appears automatically once the file exists. Music starts when the guest taps the envelope seal. |
+| Colours and fonts | CSS variables at the top of `src/app/globals.css`; fonts in `src/app/layout.tsx`. |
 
-## Learn More
+## RSVPs go to a Google Sheet
 
-To learn more about Next.js, take a look at the following resources:
+1. Create a Google Sheet. In row 1 add the headers: `Timestamp`, `Name`, `Attending`, `Guests`, `Message`.
+2. In the sheet choose **Extensions → Apps Script**, replace the code with the script below, and save.
+3. **Deploy → New deployment → Web app**. Execute as **Me**, access **Anyone**. Copy the web app URL.
+4. Set the environment variables (see below).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```js
+const SECRET = "change-me"; // must match GOOGLE_SHEET_SECRET
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+function doPost(e) {
+  const data = JSON.parse(e.postData.contents);
+  if (data.secret !== SECRET) {
+    return ContentService.createTextOutput(JSON.stringify({ ok: false })).setMimeType(ContentService.MimeType.JSON);
+  }
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+  sheet.appendRow([data.timestamp, data.name, data.attending, data.guests, data.message]);
+  return ContentService.createTextOutput(JSON.stringify({ ok: true })).setMimeType(ContentService.MimeType.JSON);
+}
+```
+
+Environment variables (copy `.env.example` to `.env.local` for local use, and add the same in Vercel):
+
+```
+GOOGLE_SHEET_WEBHOOK_URL=https://script.google.com/macros/s/XXXX/exec
+GOOGLE_SHEET_SECRET=change-me
+```
+
+Without the webhook URL the form shows a friendly error and nothing is saved.
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Push this repository to GitHub.
+2. In Vercel choose **Add New → Project**, import the repository (framework is detected as Next.js).
+3. Under **Environment Variables** add `GOOGLE_SHEET_WEBHOOK_URL` and `GOOGLE_SHEET_SECRET`.
+4. Deploy, then open the link on a phone and send a test RSVP.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Notes
+
+- Animations honour the device's "reduce motion" setting.
+- The countdown target is `invite.wedding.startsAt` (India Standard Time).
+- The calendar button on the hero downloads an `.ics` file with every event.

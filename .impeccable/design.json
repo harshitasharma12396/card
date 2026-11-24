@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-24T00:00:00Z",
+  "title": "Design System: Wedding Invitation (Card)",
+  "extensions": {
+    "colorMeta": {
+      "plum": { "role": "primary", "displayName": "Deep Plum", "canonical": "#4a1d3b", "tonalRamp": ["#1d0b17", "#2f1226", "#4a1d3b", "#6b3f5c", "#8f6882", "#b693ab", "#d9c3d2", "#f2e8ee"] },
+      "gold": { "role": "primary", "displayName": "Antique Gold", "canonical": "#b98a3a", "tonalRamp": ["#3d2c0c", "#5e4412", "#8a6420", "#b98a3a", "#d0a655", "#e0b457", "#f1d79a", "#faf0d6"] },
+      "terracotta": { "role": "secondary", "displayName": "Terracotta", "canonical": "#c9735f", "tonalRamp": ["#3c1a13", "#6a2e22", "#a4513d", "#c9735f", "#d99484", "#e6b5a9", "#f2d6cf", "#fbefec"] },
+      "rose": { "role": "secondary", "displayName": "Rose", "canonical": "#c96d6a", "tonalRamp": ["#3d1819", "#6a2b2e", "#a04a4e", "#c96d6a", "#d98f8d", "#e7b3b1", "#f3d6d5", "#fbeeee"] },
+      "sky-top": { "role": "neutral", "displayName": "Dusk Pink", "canonical": "#f3b9cc", "tonalRamp": ["#4a1d2c", "#7a3550", "#b0587a", "#d787a4", "#f3b9cc", "#f8d0dd", "#fce4ec", "#fef4f7"] },
+      "blush": { "role": "neutral", "displayName": "Blush Paper", "canonical": "#fcecef", "tonalRamp": ["#5a3a40", "#8a6168", "#b78d94", "#d9b8be", "#f1d3d6", "#fcecef", "#fff8f3", "#ffffff"] },
+      "lilac": { "role": "neutral", "displayName": "Dusk Lilac", "canonical": "#cfa8dc", "tonalRamp": ["#2f1a38", "#51315f", "#7d5390", "#b184c4", "#cfa8dc", "#e0c5ea", "#eddcf3", "#f8f0fb"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display (Gilda Display)", "purpose": "Section headings, names, ceremony titles." },
+      "accent": { "displayName": "Accent (Instrument Serif italic)", "purpose": "Day titles and warm subtitles." },
+      "body": { "displayName": "Body (Figtree)", "purpose": "Venues, notes, form text." },
+      "label": { "displayName": "Label (Figtree caps)", "purpose": "Buttons, form labels, times and dates." },
+      "devanagari": { "displayName": "Devanagari (Tiro)", "purpose": "The Hindi blessing only." }
+    },
+    "shadows": [
+      { "name": "card-lift", "value": "0 22px 34px -14px rgba(120,50,70,0.35)", "purpose": "Day cards." },
+      { "name": "form-lift", "value": "0 28px 44px -20px rgba(74,29,59,0.4)", "purpose": "RSVP form card." },
+      { "name": "button-lift", "value": "0 14px 24px -10px rgba(74,29,59,0.6)", "purpose": "Primary plum button." },
+      { "name": "gold-rod", "value": "0 2px 6px rgba(120,70,20,0.3)", "purpose": "Scroll rods." },
+      { "name": "field-focus", "value": "0 0 0 4px rgba(185,138,58,0.18)", "purpose": "Field focus glow with gold border." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Reveals, shimmer, spring-less transitions." },
+      { "name": "ambient-loops", "value": "float 6s, sway 5.5s/4.8s, breathe 5s, twinkle 3.2s, glow 3.4s, spin 14s, shimmer 5s", "purpose": "Transform/opacity only; all disabled under prefers-reduced-motion." },
+      { "name": "petal-fall", "value": "14s linear (var --dur)", "purpose": "Falling petals; frozen at 0.55 opacity when reduced motion." }
+    ],
+    "breakpoints": [
+      { "name": "narrow", "value": "380px" },
+      { "name": "column-max", "value": "440px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Plum pill with gold-soft tracked caps label; submit action.",
+      "html": "<button class=\"ds-btn-primary\">Send RSVP</button>",
+      "css": ".ds-btn-primary { background: var(--plum, #4a1d3b); color: var(--gold-soft, #f1d79a); border: 0; border-radius: 9999px; padding: 16px 24px; font-size: 11px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; box-shadow: 0 14px 24px -10px rgba(74,29,59,0.6); transition: opacity .2s; } .ds-btn-primary:hover { opacity: .92; } .ds-btn-primary:focus-visible { outline: 2px solid var(--plum, #4a1d3b); outline-offset: 3px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Translucent white pill with plum outline for secondary actions.",
+      "html": "<button class=\"ds-btn-ghost\">Save the dates</button>",
+      "css": ".ds-btn-ghost { background: rgba(255,255,255,.4); color: var(--plum, #4a1d3b); border: 1px solid rgba(74,29,59,.4); border-radius: 9999px; padding: 14px 28px; font-size: 11px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; transition: background .2s; } .ds-btn-ghost:hover { background: rgba(255,255,255,.7); } .ds-btn-ghost:focus-visible { outline: 2px solid var(--plum, #4a1d3b); outline-offset: 3px; }"
+    },
+    {
+      "name": "Map Link",
+      "kind": "chip",
+      "refersTo": "button-link-map",
+      "description": "Terracotta-ink outlined pill link on day cards.",
+      "html": "<a class=\"ds-map\" href=\"#\">View on map</a>",
+      "css": ".ds-map { display: inline-flex; border: 1px solid rgba(201,115,95,.5); color: var(--terracotta-ink, #a4513d); border-radius: 9999px; padding: 10px 16px; font-size: 11px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; text-decoration: none; transition: background .2s; } .ds-map:hover { background: rgba(201,115,95,.1); } .ds-map:focus-visible { outline: 2px solid var(--plum, #4a1d3b); outline-offset: 3px; }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "Soft white field with gold focus glow.",
+      "html": "<input class=\"ds-field\" placeholder=\"Your name\">",
+      "css": ".ds-field { width: 100%; box-sizing: border-box; border: 1px solid var(--paper-edge, #f1d3d6); background: rgba(255,255,255,.72); border-radius: 14px; padding: 14px 16px; font-size: 16px; color: var(--plum, #4a1d3b); transition: border-color .2s, box-shadow .2s, background .2s; } .ds-field::placeholder { color: var(--mauve, #6b3f5c); opacity: 1; } .ds-field:focus { outline: none; border-color: var(--gold, #b98a3a); box-shadow: 0 0 0 4px rgba(185,138,58,.18); background: #fff; }"
+    },
+    {
+      "name": "Day Card",
+      "kind": "card",
+      "refersTo": "card-day",
+      "description": "Ivory-to-blush scroll card with terracotta frame and inset gold hairline.",
+      "html": "<article class=\"ds-day\"><h3>Haldi</h3><p>Friday, 12 Dec</p></article>",
+      "css": ".ds-day { position: relative; text-align: center; padding: 36px 28px 48px; border: 2px solid rgba(201,115,95,.7); border-radius: 30px; background: linear-gradient(180deg, var(--ivory, #fff8f3), var(--blush, #fcecef)); box-shadow: 0 22px 34px -14px rgba(120,50,70,.35); color: var(--plum, #4a1d3b); } .ds-day::before { content: ''; position: absolute; inset: 8px; border: 1px solid rgba(185,138,58,.6); border-radius: 23px; pointer-events: none; } .ds-day h3 { margin: 0; font-style: italic; font-size: 36px; line-height: 1; } .ds-day p { margin: 12px 0 0; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--rose-ink, #a04a4e); }"
+    },
+    {
+      "name": "Attend Toggle",
+      "kind": "custom",
+      "refersTo": "button-primary",
+      "description": "Segmented pill; selected segment is plum with gold-soft label.",
+      "html": "<div class=\"ds-toggle\"><button class=\"on\">Joyfully yes</button><button>Regretfully no</button></div>",
+      "css": ".ds-toggle { display: grid; grid-template-columns: 1fr 1fr; padding: 4px; border-radius: 9999px; background: rgba(255,255,255,.7); box-shadow: inset 0 0 0 1px var(--paper-edge, #f1d3d6); } .ds-toggle button { border: 0; background: none; border-radius: 9999px; padding: 14px 6px; font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--plum-soft, #5d2d4d); } .ds-toggle .on { background: var(--plum, #4a1d3b); color: var(--gold-soft, #f1d79a); } .ds-toggle button:focus-visible { outline: 2px solid var(--plum, #4a1d3b); outline-offset: 3px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Opened Envelope",
+    "overview": "This is a new world, built from a user-supplied reference video, not an inherited system. Opening the invitation is the ritual: a sealed envelope opens into one continuous dusk-lit scroll in which each section is a different physical object. All art is hand-built placeholder SVG; gallery photos are the family's own; motion has a prefers-reduced-motion path; small text uses the ink tokens for contrast.",
+    "keyCharacteristics": [
+      "Dusk gradient ground, paper cards, gold hairline inner frames",
+      "Arches, jharokha frames, tassels, torana, lanterns, petals, all authored SVG",
+      "Plum is the only action colour; gold is ornament and focus",
+      "Blurred, plum- or rose-tinted ambient shadows only",
+      "Gilda headings, Instrument Serif italic accents, Figtree small labels"
+    ],
+    "rules": [
+      { "name": "The Ink Twin Rule", "body": "Text under 18px uses rose-ink, terracotta-ink, mauve or plum-soft. The bright rose and terracotta are for lines and fills only.", "section": "colors" },
+      { "name": "The Gold Is Ornament Rule", "body": "Gold marks frames, dividers, rods, focus and selected states. It is not the action colour; plum is.", "section": "colors" },
+      { "name": "The Three Voices Rule", "body": "Headings in Gilda, asides in Instrument Serif italic, functional text in Figtree. Do not add a fourth face.", "section": "typography" },
+      { "name": "The Soft Shadow Rule", "body": "Shadows are blurred with a negative spread and tinted plum or rose; the fixed offsets are vertical.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep plum as the only action colour and gold as ornament.",
+      "Do use ink-twin tokens for any text under 18px.",
+      "Do build ornament as authored SVG in src/components/art/ and give every ambient animation a reduced-motion path.",
+      "Do animate only transform and opacity, with the ease-out curve cubic-bezier(0.16, 1, 0.3, 1).",
+      "Do keep labels in tracked caps for functional text (buttons, field labels, times)."
+    ],
+    "donts": [
+      "Don't use bright rose or terracotta for small text.",
+      "Don't introduce hard-edged or black shadows.",
+      "Don't add faces beyond the three voices (plus Devanagari for Hindi).",
+      "Don't stack generic hero, feature-card and form blocks; each section is its own object."
+    ]
+  }
+}

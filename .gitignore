@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+!.env.example
+
+# local design-review captures and tool caches
+.impeccable/review/
+.impeccable/hook.cache.json
+.claude/
