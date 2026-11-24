@@ -8,7 +8,7 @@ import { HOME_MAP_QUERY, VENUE_MAP_QUERY, mapSearch, type Invite } from "./invit
 
 const VENUE_NAME = "मधुबन मैरिज गार्डन";
 const VENUE_ADDRESS = "सीकर रोड, राजावास, नांगल सिरस, राजस्थान 302048";
-const HOME = "20, सुमन विहार, कृष्णा नगर, इमली फाटक, जयपुर, 302015";
+const HOME = "सुमन विहार, इमली फाटक, जयपुर";
 const AT_HOME = "निज निवास";
 
 export const hi: Invite = {

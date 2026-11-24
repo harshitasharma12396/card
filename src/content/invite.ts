@@ -135,7 +135,7 @@ export const HOME_MAP_QUERY = "26.891409,75.7901363";
 
 const VENUE_NAME = "Madhuban Marriage Garden";
 const VENUE_ADDRESS = "Sikar Road, Rajawas, Nangal Siras, Rajasthan 302048";
-const HOME = "20 Suman Vihar, Krishna Nagar, Imli Phatak, Jaipur, 302015";
+const HOME = "Suman Vihar, Imli Phatak, Jaipur";
 
 export const en: Invite = {
   meta: {
