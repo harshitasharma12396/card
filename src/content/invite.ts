@@ -203,7 +203,7 @@ export const en: Invite = {
           "Dr. Lata & Alok ji",
           "Rekha & Saurabh ji",
           "Gudda & Manoj ji",
-          "Veena & Sunil ji",
+          "Cheena & Sunil ji",
         ],
       },
       { title: "Welcomed by", lines: ["Rajneesh & Rekha", "Saksham, Aditya"] },
