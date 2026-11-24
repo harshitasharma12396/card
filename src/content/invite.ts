@@ -130,8 +130,8 @@ export const mapSearch = (q: string) =>
 
 /** Google Maps finds the venue by its plus code plus the address (the same pin in both languages). */
 export const VENUE_MAP_QUERY = "Madhuban Marriage Garden, 3PCX+CG8, Sikar Rd, Rajawas, Nangal Siras, Rajasthan 302048";
-/** Exact Google Maps pin for the family home ("Suman vihar imali phatak"), so the button opens the house, not a street search. */
-export const HOME_MAP_QUERY = "26.891409,75.7901363";
+/** The place name exactly as Google Maps lists it, so the button opens that listing (a raw coordinate pin landed a little off it). */
+export const HOME_MAP_QUERY = "Suman vihar imali phatak, Jaipur";
 
 const VENUE_NAME = "Madhuban Marriage Garden";
 const VENUE_ADDRESS = "Sikar Road, Rajawas, Nangal Siras, Rajasthan 302048";
