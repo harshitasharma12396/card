@@ -47,6 +47,15 @@ export async function POST(request: Request) {
       signal: AbortSignal.timeout(10_000),
     });
     if (!res.ok) throw new Error(`webhook responded ${res.status}`);
+    // Apps Script answers 200 even when it rejects a request (wrong secret, script error),
+    // so the reply must say ok:true before the guest is told their RSVP was saved.
+    let saved = false;
+    try {
+      saved = ((await res.json()) as { ok?: boolean }).ok === true;
+    } catch {
+      saved = false;
+    }
+    if (!saved) throw new Error("webhook did not confirm the row was saved");
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("RSVP forward failed:", err);
