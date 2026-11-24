@@ -61,6 +61,10 @@ Without the webhook URL the form shows a friendly error and nothing is saved.
 3. Under **Environment Variables** add `GOOGLE_SHEET_WEBHOOK_URL` and `GOOGLE_SHEET_SECRET`.
 4. Deploy, then open the link on a phone and send a test RSVP.
 
+## Music credit and licence
+
+`public/audio/invite.mp3` is "Short Flute-based Non Lexical Song" by kalsstockmedia, downloaded from Pixabay (pixabay.com/music) under the Pixabay Content License. Keep a screenshot of the track's Pixabay page as proof of the licence. The file was re-encoded to 128 kbps for faster loading on mobile data.
+
 ## Notes
 
 - Animations honour the device's "reduce motion" setting.
