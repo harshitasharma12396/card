@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
-import { invite } from "@/content/invite";
+import { useInvite } from "@/components/Language";
 import { Seal } from "@/components/art/Ornaments";
 import { Palace, Pedestal } from "@/components/art/Scenes";
 import { Lanterns, Petals } from "@/components/Ambient";
@@ -13,6 +13,7 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 type Phase = "idle" | "opening";
 
 export function Envelope({ onOpen }: { onOpen: () => void }) {
+  const invite = useInvite();
   const reduce = useReducedMotion();
   const { start } = useMusic();
   const [phase, setPhase] = useState<Phase>("idle");
@@ -37,7 +38,7 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
   };
 
   const opening = phase === "opening";
-  const initial = invite.couple.first[0] + " & " + invite.couple.second[0];
+  const initial = invite.couple.monogram;
 
   return (
     <motion.div
@@ -46,7 +47,7 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
       exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 1.12, filter: "blur(14px)" }}
       transition={{ duration: 0.95, ease: EASE }}
       role="dialog"
-      aria-label="Wedding invitation envelope"
+      aria-label={invite.a11y.envelopeLabel}
     >
       {/* sun glow */}
       <div
@@ -107,7 +108,7 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
                 transition={{ duration: 1.7, times: [0, 0.55, 1], ease: EASE, delay: 0.85 }}
               >
                 <div className="flex flex-col items-center gap-2">
-                  <span className="caps text-[11px] text-mauve">You are invited</span>
+                  <span className="caps text-[11px] text-mauve">{invite.envelope.youAreInvited}</span>
                   <span className="font-display text-[34px] leading-none text-gold">{initial}</span>
                   <span className="h-px w-16 bg-gold/50" />
                 </div>
@@ -168,7 +169,7 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
                     e.stopPropagation();
                     open();
                   }}
-                  aria-label="Open the invitation"
+                  aria-label={invite.a11y.openInvitation}
                   className="relative block h-16 w-16 rounded-full"
                   whileHover={opening ? undefined : { scale: 1.08 }}
                   whileTap={opening ? undefined : { scale: 0.92 }}
@@ -205,13 +206,6 @@ export function Envelope({ onOpen }: { onOpen: () => void }) {
         </motion.p>
       </div>
 
-      <button
-        type="button"
-        onClick={onOpen}
-        className="caps absolute bottom-6 right-5 z-20 rounded-full border border-white/60 bg-white/45 px-5 py-2.5 text-[11px] text-plum-soft transition-colors hover:bg-white/70"
-      >
-        {invite.envelope.skip}
-      </button>
     </motion.div>
   );
 }

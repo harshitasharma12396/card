@@ -2,7 +2,7 @@
 
 import { useId, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { invite } from "@/content/invite";
+import { useInvite } from "@/components/Language";
 import { MinusIcon, PlusIcon } from "@/components/art/Ornaments";
 import { Reveal } from "@/components/Reveal";
 import { rsvpSchema } from "@/lib/rsvp-schema";
@@ -36,6 +36,7 @@ function Burst() {
 export function Rsvp() {
   const reduce = useReducedMotion();
   const uid = useId();
+  const invite = useInvite();
   const t = invite.rsvp;
   const [status, setStatus] = useState<Status>("idle");
   const [name, setName] = useState("");
@@ -174,7 +175,7 @@ export function Rsvp() {
                       <motion.div key="guests" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.5, ease: EASE }} className="overflow-hidden">
                         <p className="caps text-[11px] text-mauve" id={`${uid}-g`}>{t.guestsLabel}</p>
                         <div className="mt-2 flex items-center justify-between rounded-[14px] border border-paper-edge bg-white/70 px-2 py-1.5" role="group" aria-labelledby={`${uid}-g`}>
-                          <button type="button" onClick={() => setGuests((g) => Math.max(1, g - 1))} aria-label="One fewer guest" className="grid h-11 w-11 place-items-center rounded-full text-[22px] text-plum transition-colors hover:bg-white disabled:opacity-40" disabled={guests <= 1}>
+                          <button type="button" onClick={() => setGuests((g) => Math.max(1, g - 1))} aria-label={invite.a11y.fewerGuests} className="grid h-11 w-11 place-items-center rounded-full text-[22px] text-plum transition-colors hover:bg-white disabled:opacity-40" disabled={guests <= 1}>
                             <MinusIcon className="h-5 w-5" />
                           </button>
                           <div className="relative h-8 w-12 overflow-hidden text-center" aria-live="polite">
@@ -184,7 +185,7 @@ export function Rsvp() {
                               </motion.span>
                             </AnimatePresence>
                           </div>
-                          <button type="button" onClick={() => setGuests((g) => Math.min(10, g + 1))} aria-label="One more guest" className="grid h-11 w-11 place-items-center rounded-full text-[22px] text-plum transition-colors hover:bg-white disabled:opacity-40" disabled={guests >= 10}>
+                          <button type="button" onClick={() => setGuests((g) => Math.min(10, g + 1))} aria-label={invite.a11y.moreGuests} className="grid h-11 w-11 place-items-center rounded-full text-[22px] text-plum transition-colors hover:bg-white disabled:opacity-40" disabled={guests >= 10}>
                             <PlusIcon className="h-5 w-5" />
                           </button>
                         </div>

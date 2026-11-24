@@ -51,9 +51,9 @@
   --color-plum: var(--plum);
   --color-plum-soft: var(--plum-soft);
   --color-mauve: var(--mauve);
-  --font-display: var(--font-gilda), Georgia, serif;
-  --font-accent: var(--font-instrument), Georgia, serif;
-  --font-sans: var(--font-figtree), system-ui, sans-serif;
+  --font-display: var(--font-gilda), var(--font-tiro), Georgia, serif;
+  --font-accent: var(--font-instrument), var(--font-tiro), Georgia, serif;
+  --font-sans: var(--font-figtree), var(--font-noto-deva), system-ui, sans-serif;
   --font-deva: var(--font-tiro), "Noto Serif Devanagari", serif;
 }
 
@@ -66,7 +66,7 @@ body {
   margin: 0;
   background: var(--sky-top);
   color: var(--plum);
-  font-family: var(--font-figtree), system-ui, sans-serif;
+  font-family: var(--font-figtree), var(--font-noto-deva), system-ui, sans-serif;
   overflow-x: hidden;
   -webkit-tap-highlight-color: transparent;
 }
@@ -88,16 +88,25 @@ body.is-locked {
 }
 
 /* ---------- Type helpers ---------- */
-.font-display { font-family: var(--font-gilda), Georgia, serif; }
-.font-accent { font-family: var(--font-instrument), Georgia, serif; }
+.font-display { font-family: var(--font-gilda), var(--font-tiro), Georgia, serif; }
+.font-accent { font-family: var(--font-instrument), var(--font-tiro), Georgia, serif; }
 .font-deva { font-family: var(--font-tiro), "Noto Serif Devanagari", serif; }
 .caps {
-  font-family: var(--font-figtree), system-ui, sans-serif;
+  font-family: var(--font-figtree), var(--font-noto-deva), system-ui, sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.22em;
   font-weight: 500;
 }
 .caps-tight { letter-spacing: 0.12em; }
+
+/* ---------- Hindi (Devanagari) ----------
+   Wide letter-spacing pulls conjuncts and matras apart, and Devanagari needs taller lines
+   for its headline bar and vowel signs, so Hindi mode relaxes both. */
+html[lang="hi"] body { line-height: 1.6; }
+html[lang="hi"] .caps { letter-spacing: 0.03em; font-size: 12.5px; font-weight: 500; }
+html[lang="hi"] .caps-tight { letter-spacing: 0; }
+html[lang="hi"] h1, html[lang="hi"] h2, html[lang="hi"] h3 { line-height: 1.4; }
+html[lang="hi"] .font-accent { line-height: 1.35; }
 @media (max-width: 380px) {
   .caps-tight { letter-spacing: 0.04em; }
 }

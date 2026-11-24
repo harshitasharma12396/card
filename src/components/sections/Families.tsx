@@ -1,11 +1,12 @@
 "use client";
 
 import { motion } from "motion/react";
-import { invite } from "@/content/invite";
+import { useInvite } from "@/components/Language";
 import { Divider, Lotus } from "@/components/art/Ornaments";
 import { Reveal, staggerChild, staggerParent } from "@/components/Reveal";
 
 export function Families() {
+  const invite = useInvite();
   const f = invite.families;
   return (
     <section className="relative px-8 pb-24 pt-4">

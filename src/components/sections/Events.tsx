@@ -1,13 +1,15 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import { invite, type EventDay } from "@/content/invite";
+import { type EventDay } from "@/content/invite";
+import { useInvite } from "@/components/Language";
 import { EventIcon, FloralCorner, PinIcon, Tassel } from "@/components/art/Ornaments";
 import { Reveal } from "@/components/Reveal";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 function DayCard({ day, index }: { day: EventDay; index: number }) {
+  const invite = useInvite();
   const reduce = useReducedMotion();
   const left = index % 2 === 0;
   const tilt = left ? -1.2 : 1.2;
@@ -101,6 +103,7 @@ function DayCard({ day, index }: { day: EventDay; index: number }) {
 }
 
 export function Events() {
+  const invite = useInvite();
   return (
     <section className="relative px-6 pb-28 pt-8">
       <div className="column text-center">

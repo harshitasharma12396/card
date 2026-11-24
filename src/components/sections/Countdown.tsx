@@ -1,7 +1,9 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";import { invite } from "@/content/invite";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { en } from "@/content/invite";
+import { useInvite } from "@/components/Language";
 import { Divider, HeartIcon, Lantern, Torana } from "@/components/art/Ornaments";
 import { Palace, Skyline } from "@/components/art/Scenes";
 import { Lanterns } from "@/components/Ambient";
@@ -9,7 +11,7 @@ import { Reveal } from "@/components/Reveal";
 import { splitDuration, useNowSeconds } from "@/lib/use-now";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
-const TARGET = new Date(invite.wedding.startsAt).getTime() / 1000;
+const TARGET = new Date(en.wedding.startsAt).getTime() / 1000;
 
 function Tile({ value, label, index }: { value: number | null; label: string; index: number }) {
   const text = value === null ? "--" : String(value).padStart(2, "0");
@@ -53,6 +55,7 @@ type Wish = { id: number; text: string; left: number; rise: number };
 
 export function Countdown() {
   const reduce = useReducedMotion();
+  const invite = useInvite();
   const t = invite.countdown;
   const now = useNowSeconds();
   const left = now === null ? null : splitDuration(TARGET - now);
@@ -86,7 +89,7 @@ export function Countdown() {
 
       <div className="column">
         <Reveal>
-          <h2 className="font-display text-[26px] leading-tight text-plum">
+          <h2 lang="en" className="font-display text-[26px] leading-tight text-plum">
             {t.heading}
             <span className="font-accent mt-0.5 block text-[56px] italic leading-tight text-gold-deep">{t.headingAccent}</span>
           </h2>
@@ -94,7 +97,7 @@ export function Countdown() {
         </Reveal>
 
         <Reveal className="mt-10" y={40}>
-          <div role="timer" aria-label={`${left?.days ?? ""} days until the wedding`}>
+          <div role="timer" aria-label={invite.a11y.timer(left?.days ?? null)}>
             <Torana className="w-full" count={4} />
             <div className="-mt-[6px] grid grid-cols-4 gap-1.5">
               {units.map(([k, v], i) => (
@@ -162,7 +165,7 @@ export function Countdown() {
         <Reveal className="relative z-10 mt-24 pb-44" delay={0.1}>
           <p className="font-accent text-[22px] italic text-plum-soft">{invite.footer.withLove}</p>
           <p className="font-display mt-2 text-[30px] leading-tight text-plum">
-            {invite.couple.first} &amp; {invite.couple.second}
+            {invite.couple.first} {invite.couple.and} {invite.couple.second}
           </p>
           <p className="mt-1 text-[14px] text-plum-soft">{invite.footer.families}</p>
           <p className="caps mt-6 text-[11px] text-plum-soft">{invite.wedding.dateLong}</p>

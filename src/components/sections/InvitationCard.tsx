@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import { invite } from "@/content/invite";
+import { useInvite } from "@/components/Language";
 import { Divider, FloralCorner, HangingUmbrella, Lotus, PinIcon } from "@/components/art/Ornaments";
 import { staggerChild, staggerParent } from "@/components/Reveal";
 
@@ -15,6 +15,7 @@ const INNER =
 
 export function InvitationCard() {
   const reduce = useReducedMotion();
+  const invite = useInvite();
   const { couple, wedding, card } = invite;
 
   return (

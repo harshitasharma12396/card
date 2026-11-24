@@ -2,7 +2,8 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { invite } from "@/content/invite";
+import { MUSIC_SRC } from "@/content/invite";
+import { useInvite } from "@/components/Language";
 import { NoteIcon } from "@/components/art/Ornaments";
 
 type MusicState = {
@@ -29,7 +30,7 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
   // The toggle only appears when an audio file has actually been added to /public/audio.
   useEffect(() => {
     let cancelled = false;
-    fetch(invite.music.src, { method: "HEAD" })
+    fetch(MUSIC_SRC, { method: "HEAD" })
       .then((r) => {
         if (!cancelled && r.ok && (r.headers.get("content-type") ?? "").includes("audio")) setAvailable(true);
       })
@@ -41,7 +42,7 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
 
   const ensureAudio = useCallback(() => {
     if (!audioRef.current) {
-      const a = new Audio(invite.music.src);
+      const a = new Audio(MUSIC_SRC);
       a.loop = true;
       a.volume = 0.55;
       a.addEventListener("play", () => setPlaying(true));
@@ -75,6 +76,7 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
 }
 
 export function MusicToggle({ visible }: { visible: boolean }) {
+  const invite = useInvite();
   const { available, playing, toggle } = useMusic();
   return (
     <AnimatePresence>

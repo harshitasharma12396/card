@@ -3,7 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { invite, type GalleryItem } from "@/content/invite";
+import { type GalleryItem } from "@/content/invite";
+import { useInvite } from "@/components/Language";
 import { ChevronIcon, FloralCorner } from "@/components/art/Ornaments";
 import { CoupleScene } from "@/components/art/Scenes";
 import { Reveal } from "@/components/Reveal";
@@ -34,6 +35,7 @@ function Frame({ item, className = "" }: { item: GalleryItem; className?: string
 
 export function Gallery() {
   const reduce = useReducedMotion();
+  const invite = useInvite();
   const items = invite.gallery.items;
   const [viewportRef, embla] = useEmblaCarousel({ loop: true, align: "center", skipSnaps: false });
   const [index, setIndex] = useState(0);
@@ -109,7 +111,7 @@ export function Gallery() {
         <button
           type="button"
           onClick={() => go(-1)}
-          aria-label="Previous photo"
+          aria-label={invite.a11y.prevPhoto}
           className="absolute left-3 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/70 bg-white/70 text-plum shadow-[0_8px_18px_-6px_rgba(74,29,59,0.4)]"
         >
           <ChevronIcon dir="left" className="h-5 w-5" />
@@ -117,7 +119,7 @@ export function Gallery() {
         <button
           type="button"
           onClick={() => go(1)}
-          aria-label="Next photo"
+          aria-label={invite.a11y.nextPhoto}
           className="absolute right-3 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/70 bg-white/70 text-plum shadow-[0_8px_18px_-6px_rgba(74,29,59,0.4)]"
         >
           <ChevronIcon dir="right" className="h-5 w-5" />
@@ -157,7 +159,7 @@ export function Gallery() {
           ref={stripRef}
           className="-mx-6 mt-5 flex items-center gap-2.5 overflow-x-auto px-[calc(50%-23px)] py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           role="tablist"
-          aria-label="Choose a photo"
+          aria-label={invite.a11y.choosePhoto}
         >
           {items.map((item, i) => (
             <button

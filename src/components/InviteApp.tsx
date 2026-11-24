@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useScroll, useTransform, useReducedMotion } from "motion/react";
 import { MusicProvider, MusicToggle } from "@/components/Music";
+import { LanguageProvider, LanguageToggle } from "@/components/Language";
 import { Lanterns } from "@/components/Ambient";
 import { HangingUmbrella } from "@/components/art/Ornaments";
 import { Envelope } from "@/components/sections/Envelope";
@@ -67,6 +68,7 @@ export function InviteApp() {
   }, [opened]);
 
   return (
+    <LanguageProvider>
     <MusicProvider>
       <Backdrop />
       <SideArt />
@@ -81,7 +83,9 @@ export function InviteApp() {
         <Countdown />
       </main>
       <MusicToggle visible={opened} />
+      <LanguageToggle />
       <AnimatePresence>{!opened && <Envelope key="envelope" onOpen={() => setOpened(true)} />}</AnimatePresence>
     </MusicProvider>
+    </LanguageProvider>
   );
 }

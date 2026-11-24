@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { invite } from "@/content/invite";
+import { useInvite } from "@/components/Language";
 import { Divider, ChevronIcon } from "@/components/art/Ornaments";
 import { Palace } from "@/components/art/Scenes";
 import { Lanterns, Petals } from "@/components/Ambient";
@@ -10,11 +10,19 @@ import { downloadCalendar } from "@/lib/ics";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
+/** Splits into user-perceived letters, so Devanagari matras and conjuncts stay attached to their base. */
+function splitGraphemes(text: string): string[] {
+  if (typeof Intl !== "undefined" && "Segmenter" in Intl) {
+    return Array.from(new Intl.Segmenter(undefined, { granularity: "grapheme" }).segment(text), (s) => s.segment);
+  }
+  return Array.from(text);
+}
+
 function Letters({ text, delay = 0, active }: { text: string; delay?: number; active: boolean }) {
   const reduce = useReducedMotion();
   return (
-    <span aria-label={text} className="inline-flex overflow-hidden pb-[0.12em]">
-      {text.split("").map((ch, i) => (
+    <span aria-label={text} className="inline-flex overflow-hidden py-[0.12em]">
+      {splitGraphemes(text).map((ch, i) => (
         <motion.span
           key={i}
           aria-hidden="true"
@@ -37,6 +45,7 @@ export function Hero({ active }: { active: boolean }) {
   const palaceY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, 70]);
   const textY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, -50]);
   const lanternY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, -120]);
+  const invite = useInvite();
   const { couple, wedding } = invite;
 
   return (
@@ -97,7 +106,7 @@ export function Hero({ active }: { active: boolean }) {
 
         <motion.button
           type="button"
-          onClick={downloadCalendar}
+          onClick={() => downloadCalendar(invite)}
           className="btn-shimmer caps mt-8 rounded-full border border-plum/40 bg-white/40 px-7 py-3.5 text-[11px] text-plum transition-colors hover:bg-white/70"
           initial={{ opacity: 0, y: 14 }}
           animate={active ? { opacity: 1, y: 0 } : undefined}

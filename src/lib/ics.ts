@@ -1,10 +1,10 @@
-import { invite } from "@/content/invite";
+import type { Invite } from "@/content/invite";
 
 const stamp = (d: Date) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
 const esc = (s: string) => s.replace(/([,;\\])/g, "\\$1").replace(/\n/g, "\\n");
 
 /** Builds a calendar file with every ceremony so guests can save the dates (times are India Standard Time). */
-export function buildCalendar(): string {
+export function buildCalendar(invite: Invite): string {
   const { couple, events } = invite;
   const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Wedding Invitation//EN", "CALSCALE:GREGORIAN"];
   const now = stamp(new Date());
@@ -29,8 +29,8 @@ export function buildCalendar(): string {
   return lines.join("\r\n");
 }
 
-export function downloadCalendar() {
-  const blob = new Blob([buildCalendar()], { type: "text/calendar;charset=utf-8" });
+export function downloadCalendar(invite: Invite) {
+  const blob = new Blob([buildCalendar(invite)], { type: "text/calendar;charset=utf-8" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;

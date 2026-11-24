@@ -13,8 +13,9 @@ npm run build    # production build
 
 ## Change the content
 
-Every word lives in **`src/content/invite.ts`**: names, parents, dates, venues, event cards, gallery captions, RSVP and footer text.
-The text there comes from the printed invitation card, translated to English.
+Every word lives in two files: **`src/content/invite.ts`** (English) and **`src/content/invite.hi.ts`** (Hindi): names, parents, dates, venues, event cards, gallery captions, RSVP and footer text.
+Both follow the same typed shape, so a missing translation is a build error. A **हिन्दी / English** switch sits at the top right of the page; the choice is remembered, and a link ending in `?lang=hi` opens the Hindi version directly.
+In Hindi mode these stay in English by the family's choice: "Save the date", "View on map", AM / PM, "RSVP", and the "Counting down to Forever" heading.
 
 | To change | Where |
 |---|---|

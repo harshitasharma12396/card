@@ -1,12 +1,13 @@
 /**
- * Every word on the invitation lives here.
- * Content below was translated from the printed Hindi invitation card.
- * Gallery images, music and RSVP destination are still placeholders (see README).
+ * Every word on the invitation lives in two files: this one (English) and invite.hi.ts (Hindi).
+ * Both must follow the `Invite` shape below, so a missing translation is a type error, not a blank on the page.
+ * English facts were translated from the printed Hindi invitation card; the Hindi file uses the card's own wording.
+ * Music and the RSVP destination are configured outside the content (see README).
  */
 
 export type Ceremony = {
   name: string;
-  /** Shown to guests, e.g. "6:15 AM" */
+  /** Shown to guests, e.g. "6:15 AM" (AM / PM stay in English in both languages) */
   time: string;
   /** 24h time used for the calendar file, e.g. "06:15" */
   at: string;
@@ -39,16 +40,104 @@ export type GalleryItem = {
   art: 1 | 2 | 3 | 4;
 };
 
-const mapSearch = (q: string) =>
+export type FamilyGroup = { title: string; lines: string[]; footnote?: string };
+
+export type Invite = {
+  meta: { title: string; description: string };
+  envelope: { hint: string; youAreInvited: string };
+  couple: {
+    first: string;
+    second: string;
+    /** Two letters shown on the envelope's letter, e.g. "R & N" */
+    monogram: string;
+    /** The joining word in plain text lines, e.g. "&" or "और" */
+    and: string;
+    blessing: string;
+    firstParents: string;
+    secondParents: string;
+  };
+  wedding: {
+    dateLong: string;
+    dateShort: string;
+    time: string;
+    /** Countdown target (India Standard Time): Pani Grahan Sanskar, the wedding ceremony. */
+    startsAt: string;
+    venue: string;
+    venueAddress: string;
+    city: string;
+    mapUrl: string;
+    saveTheDate: string;
+  };
+  card: { blessing: string; request: string; viewOnMap: string };
+  families: { heading: string; sub: string; groups: FamilyGroup[] };
+  eventsHeading: string;
+  eventsSub: string;
+  events: EventDay[];
+  gallery: { heading: string; sub: string; items: GalleryItem[]; swipeHint: string };
+  rsvp: {
+    heading: string;
+    sub: string;
+    nameLabel: string;
+    namePlaceholder: string;
+    attendLabel: string;
+    yes: string;
+    no: string;
+    guestsLabel: string;
+    messageLabel: string;
+    messagePlaceholder: string;
+    submit: string;
+    sending: string;
+    successYesTitle: string;
+    successYesBody: string;
+    successNoTitle: string;
+    successNoBody: string;
+    errorGeneric: string;
+    errorName: string;
+    editAgain: string;
+  };
+  countdown: {
+    heading: string;
+    headingAccent: string;
+    units: { days: string; hours: string; minutes: string; seconds: string };
+    tagline: [string, string];
+    wishButton: string;
+    wishPrompt: string;
+    wishPlaceholder: string;
+    wishSend: string;
+    wishClose: string;
+    wishFallbacks: string[];
+  };
+  footer: { withLove: string; families: string; madeWith: string; tagline: string };
+  music: { on: string; off: string };
+  /** Text read out by screen readers (not visible on the page). */
+  a11y: {
+    envelopeLabel: string;
+    openInvitation: string;
+    prevPhoto: string;
+    nextPhoto: string;
+    choosePhoto: string;
+    fewerGuests: string;
+    moreGuests: string;
+    timer: (daysLeft: number | null) => string;
+  };
+};
+
+/** Shared by both languages. */
+export const MUSIC_SRC = "/audio/invite.mp3";
+
+export const mapSearch = (q: string) =>
   `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+
+/** Google Maps finds the venue by its plus code plus the address (the same pin in both languages). */
+export const VENUE_MAP_QUERY = "Madhuban Marriage Garden, 3PCX+CG8, Sikar Rd, Rajawas, Nangal Siras, Rajasthan 302048";
+/** Exact Google Maps pin for the family home ("Suman vihar imali phatak"), so the button opens the house, not a street search. */
+export const HOME_MAP_QUERY = "26.891409,75.7901363";
 
 const VENUE_NAME = "Madhuban Marriage Garden";
 const VENUE_ADDRESS = "Sikar Road, Rajawas, Nangal Siras, Rajasthan 302048";
-/** Google Maps finds the venue by its plus code plus the address. */
-const VENUE_MAP_QUERY = "Madhuban Marriage Garden, 3PCX+CG8, Sikar Rd, Rajawas, Nangal Siras, Rajasthan 302048";
 const HOME = "20 Suman Vihar, Krishna Nagar, Imli Phatak, Jaipur, 302015";
 
-export const invite = {
+export const en: Invite = {
   meta: {
     title: "Raj & Navdha | Wedding Invitation",
     description: "You and your family are warmly invited to the wedding of Raj and Navdha, 14 December 2026, Jaipur.",
@@ -56,14 +145,15 @@ export const invite = {
 
   envelope: {
     hint: "Tap the seal to open",
-    skip: "Skip",
+    youAreInvited: "You are invited",
   },
 
   couple: {
     first: "Raj",
     second: "Navdha",
+    monogram: "R & N",
+    and: "&",
     blessing: "श्री गणेशाय नमः",
-    togetherWith: "Together with our families",
     firstParents: "Son of Smt. Suman Sharma & the late Shri Kishan Lal Kothotya, Jaipur",
     secondParents: "Daughter of Dr. Abha Pareek & Dr. Rajesh Pareek, Shri Gopal Nagar, Jaipur",
   },
@@ -72,13 +162,12 @@ export const invite = {
     dateLong: "Monday, 14 December 2026",
     dateShort: "14th December 2026",
     time: "Wedding ceremony at 12:15 PM",
-    /** Countdown target (India Standard Time): Pani Grahan Sanskar, the wedding ceremony. */
     startsAt: "2026-12-14T12:15:00+05:30",
     venue: VENUE_NAME,
     venueAddress: VENUE_ADDRESS,
     city: "Jaipur",
     mapUrl: mapSearch(VENUE_MAP_QUERY),
-    saveTheDate: "Save the dates",
+    saveTheDate: "Save the date",
   },
 
   card: {
@@ -132,7 +221,7 @@ export const invite = {
       date: "2026-12-10",
       venue: "Family residence",
       note: HOME,
-      mapUrl: mapSearch(HOME),
+      mapUrl: mapSearch(HOME_MAP_QUERY),
       icon: "kalash",
       ceremonies: [
         { name: "Ganesh Nimantran", time: "6:15 AM", at: "06:15" },
@@ -148,7 +237,7 @@ export const invite = {
       date: "2026-12-11",
       venue: "Family residence",
       note: HOME,
-      mapUrl: mapSearch(HOME),
+      mapUrl: mapSearch(HOME_MAP_QUERY),
       icon: "kalash",
       ceremonies: [
         { name: "Chaak", time: "4:15 PM", at: "16:15" },
@@ -163,7 +252,7 @@ export const invite = {
       date: "2026-12-12",
       venue: "Family residence",
       note: HOME,
-      mapUrl: mapSearch(HOME),
+      mapUrl: mapSearch(HOME_MAP_QUERY),
       icon: "mehendi",
       ceremonies: [{ name: "Mehndi", time: "11:15 AM", at: "11:15" }],
     },
@@ -200,7 +289,7 @@ export const invite = {
         { name: "Aashirwad Samaroh & Preetibhoj (blessings and dinner)", time: "From 7:00 PM", at: "19:00" },
       ],
     },
-  ] satisfies EventDay[],
+  ],
 
   gallery: {
     heading: "Our moments",
@@ -221,7 +310,7 @@ export const invite = {
       { id: "g13", caption: "Sweet moments", src: "/gallery/13.jpg", thumb: "/gallery/13-thumb.jpg", alt: "Raj and Navdha: Sweet moments", art: 1 },
       { id: "g14", caption: "Just the two of us", src: "/gallery/14.jpg", thumb: "/gallery/14-thumb.jpg", alt: "Raj and Navdha: Just the two of us", art: 2 },
       { id: "g15", caption: "Written in the stars", src: "/gallery/15.jpg", thumb: "/gallery/15-thumb.jpg", alt: "Raj and Navdha: Written in the stars", art: 3 },
-    ] satisfies GalleryItem[],
+    ],
     swipeHint: "Swipe to see more",
   },
 
@@ -273,10 +362,21 @@ export const invite = {
   },
 
   music: {
-    src: "/audio/invite.mp3",
     on: "Pause music",
     off: "Play music",
   },
+
+  a11y: {
+    envelopeLabel: "Wedding invitation envelope",
+    openInvitation: "Open the invitation",
+    prevPhoto: "Previous photo",
+    nextPhoto: "Next photo",
+    choosePhoto: "Choose a photo",
+    fewerGuests: "One fewer guest",
+    moreGuests: "One more guest",
+    timer: (n) => (n === null ? "Countdown to the wedding" : `${n} days until the wedding`),
+  },
 };
 
-export type Invite = typeof invite;
+/** Kept so existing imports of `invite` still get the English content. */
+export const invite = en;
