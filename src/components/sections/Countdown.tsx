@@ -84,7 +84,7 @@ export function Countdown() {
   ];
 
   return (
-    <section className="relative isolate overflow-hidden px-6 pb-0 pt-1 text-center">
+    <section className="relative isolate overflow-hidden px-6 pb-0 pt-24 text-center">
       <Lanterns count={5} className="-z-10 opacity-55" />
 
       <div className="column">
