@@ -87,7 +87,7 @@ export function Gallery() {
   );
 
   return (
-    <section className="relative pb-28 pt-6" aria-roledescription="carousel" aria-label={invite.gallery.heading}>
+    <section className="relative pb-14 pt-6" aria-roledescription="carousel" aria-label={invite.gallery.heading}>
       <div className="column px-6 text-center">
         <Reveal>
           <h2 className="font-display text-[34px] leading-tight text-plum">{invite.gallery.heading}</h2>
