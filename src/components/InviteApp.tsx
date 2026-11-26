@@ -79,7 +79,6 @@ export function InviteApp() {
         <Families />
         <Events />
         <Gallery />
-        <Rsvp />
         <Countdown />
       </main>
       <MusicToggle visible={opened} />
