@@ -54,6 +54,12 @@ export type Invite = {
     and: string;
     blessing: string;
     firstParents: string;
+    /** Grandparents line, shown below firstParents */
+    firstGrandparents: string;
+    /** Note in brackets under the grandparents line */
+    firstGrandparentsNote: string;
+    /** City, shown last under the groom's family lines */
+    firstCity: string;
     secondParents: string;
   };
   wedding: {
@@ -154,7 +160,10 @@ export const en: Invite = {
     monogram: "R & N",
     and: "&",
     blessing: "श्री गणेशाय नमः",
-    firstParents: "Son of Smt. Suman Sharma & the late Shri Kishan Lal Kothotya, Jaipur",
+    firstParents: "Son of Smt. Suman Sharma & the late Shri Kishan Lal Kothotya,",
+    firstGrandparents: "Grandson of Late Smt. Lalita Devi and Late Master Ramchandra Ji Kathotya",
+    firstGrandparentsNote: "(Inventor of Jaipur Foot)",
+    firstCity: "Jaipur",
     secondParents: "Daughter of Dr. Abha Pareek & Dr. Rajesh Pareek, Shri Gopal Nagar, Jaipur",
   },
 

@@ -77,8 +77,11 @@ export function InvitationCard() {
             <motion.h2 variants={staggerChild()} className="mt-7 font-display text-[40px] leading-none text-plum">
               {couple.first}
             </motion.h2>
-            <motion.p variants={staggerChild()} className="mt-2 text-[12px] text-mauve">
+            <motion.p variants={staggerChild()} className="mt-2 text-[12px] leading-snug text-mauve">
               {couple.firstParents}
+              <span className="mt-1.5 block">{couple.firstGrandparents}</span>
+              <span className="block italic">{couple.firstGrandparentsNote}</span>
+              <span className="mt-1 block">{couple.firstCity}</span>
             </motion.p>
 
             <motion.div variants={staggerChild(8)} className="my-3 w-24 text-gold">
